@@ -1,17 +1,19 @@
-var Adventure = require("./adventure")
-  , inherits     = require('util').inherits
+#!/usr/bin/env babel-node
 
-module.exports = LegacyWorkshopper
+import {Adventure} from './adventure';
 
-function LegacyWorkshopper(options) {
-  if (!(this instanceof LegacyWorkshopper))
-    return new LegacyWorkshopper(options)
+class LegacyWorkshopper extends Adventure {
+  constructor(options) {
+    if (options.showHeader === undefined)
+      options.showHeader = true
 
-  if (options.showHeader === undefined)
-    options.showHeader = true
+    super(...options);
 
-  Adventure.apply(this, [options])
-  this.execute(process.argv.slice(2))
+    if (!(this instanceof LegacyWorkshopper))
+      return new LegacyWorkshopper(options)
+
+    this.execute(process.argv.slice(2))
+  }
 }
 
-inherits(LegacyWorkshopper, Adventure)
+export {LegacyWorkshopper};
